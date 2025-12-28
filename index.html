@@ -240,6 +240,20 @@ video{
   text-align:center;
 }
 
+/* link button to letter page */
+.readMore{
+  display:inline-block;
+  margin-top:10px;
+  padding:10px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.14);
+  background: linear-gradient(180deg, rgba(255,143,200,.22), rgba(255,255,255,.08));
+  color:#fff;
+  text-decoration:none;
+  font-weight:800;
+}
+.readMore:active{ transform: scale(.99); }
+
 /* ===== QUIZ ===== */
 .sectionTitle{
   margin: 28px 0 10px;
@@ -394,7 +408,7 @@ video{
 
 .resultImageWrap{
   width:100%;
-  aspect-ratio: 16 / 9;   /* keeps a nice banner shape */
+  aspect-ratio: 16 / 9;
   height: auto;
   border-radius: 18px;
   background: rgba(0,0,0,.18);
@@ -405,8 +419,8 @@ video{
 .resultImage{
   width:100%;
   height:100%;
-  object-fit: contain;     /* shows the whole image */
-  background: rgba(0,0,0,.35); /* fills letterbox nicely */
+  object-fit: contain;
+  background: rgba(0,0,0,.35);
   display:block;
 }
 
@@ -496,10 +510,13 @@ video{
         If the video doesn’t load: check the filename + keep it in the same folder as this HTML file.
       </p>
     </div>
+
+    <!-- OPTION 1: link to separate letter page -->
     <div class="card">
-      <div class="sub" style="color:rgba(255,255,255,.92);">
-        Replace this with your longer paragraph 💗
-      </div>
+      <p class="sub" style="color:rgba(255,255,255,.92); margin:0;">
+        I wrote you something longer, but it didn’t fit nicely on this page.
+      </p>
+      <a class="readMore" href="letter.html">Click here to read it 💌</a>
     </div>
   </div>
 
@@ -514,7 +531,7 @@ video{
       <img class="bannerImg" src="quiz_banner.png" alt="ATLA Quiz Banner" onerror="this.style.display='none'">
       <div class="bannerFallback">
         <div class="bannerTitle">The Bending Nation Test</div>
-        <div class="bannerSub">12 questions • One result • No cheating 😌</div>
+        <div class="bannerSub">15 questions • One result • No cheating 😌</div>
       </div>
     </div>
 
@@ -528,7 +545,7 @@ video{
     </div>
 
     <div class="quizHeader hidden" id="quizHeader">
-      <div class="pill">Question <strong id="qIndex">1</strong> / <strong id="qTotal">12</strong></div>
+      <div class="pill">Question <strong id="qIndex">1</strong> / <strong id="qTotal">15</strong></div>
       <div class="pill">Your vibe: <strong id="liveVibe">—</strong></div>
     </div>
 
@@ -807,40 +824,30 @@ const quiz = {
       { t:"Stand your ground — consistency wins", s:{earth:2} },
       { t:"Let go — don’t carry what you don’t need", s:{air:2} },
     ]},
-    {
-  q: "In a group project, you naturally become the…",
-  a: [
-    { t: "Peacemaker — keeping everyone aligned", s: { water: 2 } },
-    { t: "Driver — pushing the team to finish strong", s: { fire: 2 } },
-    { t: "Planner — making it structured and realistic", s: { earth: 2 } },
-    { t: "Ideas person — big picture + creativity", s: { air: 2 } },
-  ]
-},
-{
-  q: "What annoys you the most?",
-  a: [
-    { t: "Coldness / lack of empathy", s: { water: 2 } },
-    { t: "Laziness / no ambition", s: { fire: 2 } },
-    { t: "Unreliability / inconsistency", s: { earth: 2 } },
-    { t: "Being controlled / told what to do", s: { air: 2 } },
-  ]
-},
-{
-  q: "If you could master ONE bending skill instantly, you’d pick…",
-  a: [
-    { t: "Healing (helping someone recover)", s: { water: 2 } },
-    { t: "Lightning (precision + power)", s: { fire: 2 } },
-    { t: "Metalbending (control + strength)", s: { earth: 2 } },
-    { t: "Flight / extreme agility (pure freedom)", s: { air: 2 } },
-  ]
-},
-
+    { q:"In a group project, you naturally become the…", a:[
+      { t:"Peacemaker — keeping everyone aligned", s:{water:2} },
+      { t:"Driver — pushing the team to finish strong", s:{fire:2} },
+      { t:"Planner — making it structured and realistic", s:{earth:2} },
+      { t:"Ideas person — big picture + creativity", s:{air:2} },
+    ]},
+    { q:"What annoys you the most?", a:[
+      { t:"Coldness / lack of empathy", s:{water:2} },
+      { t:"Laziness / no ambition", s:{fire:2} },
+      { t:"Unreliability / inconsistency", s:{earth:2} },
+      { t:"Being controlled / told what to do", s:{air:2} },
+    ]},
+    { q:"If you could master ONE bending skill instantly, you’d pick…", a:[
+      { t:"Healing (helping someone recover)", s:{water:2} },
+      { t:"Lightning (precision + power)", s:{fire:2} },
+      { t:"Metalbending (control + strength)", s:{earth:2} },
+      { t:"Flight / extreme agility (pure freedom)", s:{air:2} },
+    ]},
     { q:"Which character’s personality is most like you?", a:[
-  { t:"Sokka", s:{air:1, earth:2} },
-  { t:"Iroh", s:{water:2, fire:1} },
-  { t:"Azula", s:{fire:2, earth:1} },
-  { t:"Appa", s:{earth:2, water:1} },
-]},
+      { t:"Sokka", s:{air:1, earth:2} },
+      { t:"Iroh", s:{water:2, fire:1} },
+      { t:"Azula", s:{fire:2, earth:1} },
+      { t:"Appa", s:{earth:2, water:1} },
+    ]},
   ],
   results: {
     water: { emoji:"🌊", name:"Water Tribe", img:"nation_water.png", logo:"nation_water.png",
