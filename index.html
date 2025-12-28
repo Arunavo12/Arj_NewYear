@@ -158,4 +158,277 @@
     @keyframes shake{
       0%,100%{ transform: translateX(0); }
       20%{ transform: translateX(-10px); }
-      40%{ transform: translateX(9
+      40%{ transform: translateX(9px); }
+      60%{ transform: translateX(-7px); }
+      80%{ transform: translateX(6px); }
+    }
+
+    /* Unlocked content */
+    .content{ display:none; padding:28px 18px 44px; }
+    .wrap{ max-width: 920px; margin: 0 auto; }
+    h1{
+      font-size: clamp(34px, 6vw, 58px);
+      letter-spacing:-.02em;
+      margin: 6px 0 10px;
+      line-height:1.05;
+    }
+    .sub{
+      color:var(--muted);
+      font-size: 15px;
+      line-height:1.55;
+      max-width: 70ch;
+      margin-bottom: 18px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:18px;
+      align-items:start;
+    }
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+    .card{
+      background: rgba(10,10,20,.55);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 18px;
+      padding:16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    video{
+      width:100%;
+      border-radius:14px;
+      background:black;
+      display:block;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .para{
+      font-size: 15px;
+      color: var(--text);
+      line-height:1.75;
+    }
+    .footer{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align:center;
+      opacity:.9;
+    }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <!-- LOCK -->
+    <section class="lock" id="lockScreen">
+      <div class="lockInner" id="lockInner">
+        <div class="time" id="clock">00:00</div>
+        <div class="date" id="dateLine">—</div>
+
+        <div class="countdown" id="countdown">Counting down…</div>
+
+        <div class="pinDots" aria-label="PIN">
+          <div class="pinDot" id="d1"></div>
+          <div class="pinDot" id="d2"></div>
+          <div class="pinDot" id="d3"></div>
+          <div class="pinDot" id="d4"></div>
+          <div class="pinDot" id="d5"></div>
+          <div class="pinDot" id="d6"></div>
+        </div>
+
+        <div class="keypad" aria-label="Keypad">
+          <button class="key" data-n="1">1</button>
+          <button class="key" data-n="2">2</button>
+          <button class="key" data-n="3">3</button>
+          <button class="key" data-n="4">4</button>
+          <button class="key" data-n="5">5</button>
+          <button class="key" data-n="6">6</button>
+          <button class="key" data-n="7">7</button>
+          <button class="key" data-n="8">8</button>
+          <button class="key" data-n="9">9</button>
+        </div>
+
+        <div class="rowBottom">
+          <button class="key small" id="clearBtn">Clear</button>
+          <button class="key" data-n="0">0</button>
+          <button class="key small" id="delBtn">Delete</button>
+        </div>
+
+        <div class="msg" id="msg"></div>
+      </div>
+    </section>
+
+    <!-- UNLOCKED -->
+    <section class="content" id="content">
+      <div class="wrap">
+        <h1>Happy New Year 🎆</h1>
+        <p class="sub">
+          Replace this with your message. You can keep it short here.
+        </p>
+
+        <div class="grid">
+          <div class="card">
+            <video controls playsinline preload="metadata">
+              <source src="montage.mp4" type="video/mp4" />
+              Your browser doesn’t support video playback.
+            </video>
+          </div>
+          <div class="card">
+            <div class="para">
+              Replace this with your longer paragraph. Add emojis, memories, whatever you want ✨
+            </div>
+          </div>
+        </div>
+
+        <div class="footer">Made with love ✨</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /************* CONFIG *************/
+    const CORRECT_PIN = "123456"; // <-- change this
+    const UNLOCK_YEAR = 2026;     // <-- unlocks at Jan 1, 2026 00:00:00 (local time)
+    const UNLOCK_AT = new Date(UNLOCK_YEAR, 0, 1, 0, 0, 0, 0);
+
+    /************* STATE *************/
+    let pin = "";
+    let correctEntered = false; // becomes true when they entered the correct PIN once
+
+    const lockScreen = document.getElementById("lockScreen");
+    const content = document.getElementById("content");
+    const msg = document.getElementById("msg");
+    const lockInner = document.getElementById("lockInner");
+    const countdownEl = document.getElementById("countdown");
+    const dots = [...Array(6)].map((_,i)=>document.getElementById("d"+(i+1)));
+
+    function updateDots(){
+      dots.forEach((d,i)=> d.classList.toggle("filled", i < pin.length));
+    }
+
+    function showMessage(text, kind){
+      msg.textContent = text;
+      msg.className = "msg" + (kind ? " " + kind : "");
+    }
+
+    function resetPin(withShake=false){
+      pin = "";
+      updateDots();
+      if (withShake){
+        lockInner.classList.remove("shake");
+        void lockInner.offsetWidth;
+        lockInner.classList.add("shake");
+      }
+    }
+
+    function nowIsAfterMidnight(){
+      return new Date().getTime() >= UNLOCK_AT.getTime();
+    }
+
+    function unlock(){
+      lockScreen.style.display = "none";
+      content.style.display = "block";
+    }
+
+    function formatTime(d){
+      return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    }
+
+    function pad(n){ return String(n).padStart(2,"0"); }
+
+    function tick(){
+      const now = new Date();
+      document.getElementById("clock").textContent = formatTime(now);
+      document.getElementById("dateLine").textContent =
+        now.toLocaleDateString([], { weekday:"long", month:"long", day:"numeric" });
+
+      const diffMs = UNLOCK_AT.getTime() - now.getTime();
+
+      if (diffMs <= 0){
+        countdownEl.textContent = "It’s midnight 🎉";
+        // If they already entered the correct code earlier, auto-open now.
+        if (correctEntered && lockScreen.style.display !== "none"){
+          unlock();
+        }
+      } else {
+        const total = Math.ceil(diffMs/1000);
+        const h = Math.floor(total/3600);
+        const m = Math.floor((total%3600)/60);
+        const s = total%60;
+        countdownEl.textContent = `Unlocks in ${pad(h)}:${pad(m)}:${pad(s)}`;
+      }
+    }
+
+    function checkPin(){
+      const pinOk = (pin === CORRECT_PIN);
+      const timeOk = nowIsAfterMidnight();
+
+      if (!pinOk){
+        showMessage("Wrong code", "bad");
+        correctEntered = false;
+        resetPin(true);
+        return;
+      }
+
+      // PIN is correct
+      correctEntered = true;
+
+      if (!timeOk){
+        showMessage("Correct code — will open after midnight", "good");
+        // Keep them on lock screen; clear dots (optional)
+        resetPin(false);
+        return;
+      }
+
+      // Correct + midnight passed => unlock now
+      showMessage("Unlocked 🎉", "good");
+      unlock();
+    }
+
+    /************* INPUT *************/
+    document.querySelectorAll(".key[data-n]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        if (pin.length >= 6) return;
+        pin += btn.dataset.n;
+        updateDots();
+        if (pin.length === 6){
+          setTimeout(checkPin, 120);
+        }
+      });
+    });
+
+    document.getElementById("delBtn").addEventListener("click", ()=>{
+      pin = pin.slice(0,-1);
+      updateDots();
+      showMessage("", "");
+    });
+
+    document.getElementById("clearBtn").addEventListener("click", ()=>{
+      resetPin(false);
+      showMessage("", "");
+    });
+
+    // Keyboard support (desktop)
+    window.addEventListener("keydown", (e)=>{
+      if (content.style.display === "block") return;
+      if (/^\d$/.test(e.key)){
+        if (pin.length < 6){
+          pin += e.key;
+          updateDots();
+          if (pin.length === 6) setTimeout(checkPin, 120);
+        }
+      } else if (e.key === "Backspace"){
+        pin = pin.slice(0,-1);
+        updateDots();
+      } else if (e.key === "Escape"){
+        resetPin(false);
+      }
+    });
+
+    // Start countdown/clock
+    tick();
+    setInterval(tick, 250);
+  </script>
+</body>
+</html>
