@@ -15,8 +15,6 @@
   --bad:#ff4d6d;
   --border: rgba(255,255,255,.14);
   --shadow:0 22px 90px rgba(0,0,0,.65);
-  --glass: rgba(255,255,255,.08);
-  --glass2: rgba(255,255,255,.12);
 }
 
 *{box-sizing:border-box;}
@@ -54,11 +52,7 @@ body{
   -webkit-backdrop-filter: blur(10px);
   transition: opacity .35s ease;
 }
-
-.overlay.hidden{
-  opacity:0;
-  pointer-events:none;
-}
+.overlay.hidden{ opacity:0; pointer-events:none; }
 
 .panel{
   width:min(560px,95vw);
@@ -71,7 +65,6 @@ body{
   position:relative;
   overflow:hidden;
 }
-
 .panel::before{
   content:"";
   position:absolute;
@@ -81,7 +74,6 @@ body{
     radial-gradient(500px 220px at 80% 20%, rgba(124,92,255,.18), transparent 55%);
   pointer-events:none;
 }
-
 .panel > *{ position:relative; z-index:1; }
 
 .kicker{
@@ -247,6 +239,205 @@ video{
   color:var(--muted);
   text-align:center;
 }
+
+/* ===== QUIZ ===== */
+.sectionTitle{
+  margin: 28px 0 10px;
+  font-size: 22px;
+  letter-spacing: -.01em;
+}
+.sectionSub{
+  margin: 0 0 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.quizWrap{ margin-top: 10px; display:grid; gap:14px; }
+
+.quizBanner{
+  padding: 14px;
+  overflow:hidden;
+}
+.bannerImg{
+  width:100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 16px;
+  display:block;
+  border:1px solid rgba(255,255,255,.08);
+}
+.bannerFallback{
+  margin-top:10px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.10);
+}
+.bannerTitle{
+  font-weight: 900;
+  letter-spacing: -.01em;
+  font-size: 16px;
+}
+.bannerSub{
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.startCard{
+  padding: 18px;
+  text-align:center;
+}
+.startTitle{
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -.01em;
+}
+.startText{
+  margin: 8px auto 14px;
+  color: var(--muted);
+  max-width: 60ch;
+  line-height:1.6;
+}
+.primaryBtn{
+  width: min(280px, 100%);
+  border-radius: 16px;
+  border:1px solid rgba(255,255,255,.14);
+  background: linear-gradient(180deg, rgba(255,143,200,.22), rgba(255,255,255,.08));
+  color: rgba(255,255,255,.95);
+  padding: 12px 14px;
+  font-weight: 900;
+  cursor:pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.primaryBtn:active{ transform: scale(.99); }
+.startNote{
+  margin-top: 10px;
+  color: rgba(255,255,255,.65);
+  font-size: 12px;
+}
+
+.quizHeader{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom: 2px;
+}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border-radius:999px;
+  background: rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.10);
+  color: rgba(255,255,255,.78);
+  font-size:12px;
+}
+.pill strong{ color: rgba(255,255,255,.92); font-weight:900; }
+
+.qCard{ padding: 16px; }
+.qTitle{
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -.01em;
+  margin: 0 0 10px;
+}
+.answers{ display:grid; gap:10px; }
+.ansBtn{
+  width:100%;
+  text-align:left;
+  border-radius:16px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  color: rgba(255,255,255,.92);
+  padding: 12px 12px;
+  cursor:pointer;
+  font-weight: 800;
+  transition: transform .08s ease, filter .12s ease, border-color .12s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.ansBtn:active{
+  transform: scale(.99);
+  filter: brightness(1.06);
+  border-color: rgba(255,255,255,.18);
+}
+.ansBtn small{
+  display:block;
+  margin-top: 4px;
+  font-weight: 650;
+  color: rgba(255,255,255,.68);
+}
+
+.quizNav{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top: 10px;
+}
+.secondaryBtn{
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  color: rgba(255,255,255,.85);
+  padding:10px 12px;
+  font-weight:900;
+  cursor:pointer;
+}
+.secondaryBtn:active{ transform: scale(.99); }
+
+.resultCard{ padding: 18px; display:none; }
+.resultCard.show{ display:block; }
+
+.resultImageWrap{
+  width:100%;
+  height: 220px;
+  border-radius: 18px;
+  background: rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.10);
+  overflow:hidden;
+  margin-bottom: 12px;
+}
+.resultImage{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  display:block;
+}
+.resultBadge{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  margin-bottom: 12px;
+}
+.resultLogo{
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  display:none;
+}
+.resultEmoji{ font-size: 18px; }
+.resultName{ font-weight: 950; letter-spacing: -.01em; }
+
+.resultText{
+  color: rgba(255,255,255,.90);
+  line-height: 1.75;
+}
+.resultHint{
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.hidden{ display:none !important; }
 </style>
 </head>
 
@@ -309,6 +500,65 @@ video{
     </div>
   </div>
 
+  <!-- QUIZ SECTION -->
+  <h2 class="sectionTitle">ATLA Quiz: Which Nation are you most like?</h2>
+  <p class="sectionSub">
+    You watched this because it’s my favourite show 😌 Now answer honestly and let’s see where you belong.
+  </p>
+
+  <div class="quizWrap">
+    <div class="card quizBanner">
+      <img class="bannerImg" src="quiz_banner.png" alt="ATLA Quiz Banner" onerror="this.style.display='none'">
+      <div class="bannerFallback">
+        <div class="bannerTitle">The Bending Nation Test</div>
+        <div class="bannerSub">12 questions • One result • No cheating 😌</div>
+      </div>
+    </div>
+
+    <div class="card startCard" id="startCard">
+      <div class="startTitle">Ready?</div>
+      <div class="startText">
+        Pick the answer that feels most like you. Don’t overthink it — first instinct wins.
+      </div>
+      <button class="primaryBtn" id="startBtn" type="button">Start Quiz</button>
+      <div class="startNote">Tip: You can go back if you change your mind.</div>
+    </div>
+
+    <div class="quizHeader hidden" id="quizHeader">
+      <div class="pill">Question <strong id="qIndex">1</strong> / <strong id="qTotal">12</strong></div>
+      <div class="pill">Your vibe: <strong id="liveVibe">—</strong></div>
+    </div>
+
+    <div class="card qCard hidden" id="questionCard">
+      <div class="qTitle" id="qText">Loading…</div>
+      <div class="answers" id="answers"></div>
+
+      <div class="quizNav">
+        <button class="secondaryBtn" id="backBtn" type="button">Back</button>
+        <button class="secondaryBtn" id="resetBtn" type="button">Restart</button>
+      </div>
+    </div>
+
+    <div class="card resultCard" id="resultCard">
+      <div class="resultImageWrap">
+        <img id="resultImage" class="resultImage" alt="Nation image">
+      </div>
+
+      <div class="resultBadge">
+        <img id="resultLogo" class="resultLogo" alt="Nation logo">
+        <span class="resultEmoji" id="resEmoji">✨</span>
+        <span class="resultName" id="resName">Result</span>
+      </div>
+
+      <div class="resultText" id="resText"></div>
+      <div class="resultHint" id="resHint"></div>
+
+      <div class="quizNav" style="margin-top:14px;">
+        <button class="secondaryBtn" id="retakeBtn" type="button">Retake quiz</button>
+      </div>
+    </div>
+  </div>
+
   <div class="footer">Made with love ✨</div>
 </main>
 
@@ -318,8 +568,7 @@ const CORRECT_PIN = "151021";
 const UNLOCK_YEAR = 2026;
 const UNLOCK_AT = new Date(UNLOCK_YEAR, 0, 1, 0, 0, 0, 0);
 
-/************* OPTIONAL: URL PREVIEW MODE *************/
-// You can still use #preview if you ever want.
+/************* OPTIONAL URL PREVIEW MODE *************/
 const URL_PREVIEW_MODE = location.hash.toLowerCase() === "#preview";
 
 /************* STATE *************/
@@ -452,8 +701,7 @@ let holding = false;
 function startHold(){
   if(overlay.style.display === "none") return;
   holding = true;
-  // little hint for you while holding:
-  showMessage("Hold… (secret preview)", "");
+  if(pin.length === 0) showMessage("Hold… (secret preview)", "");
   holdTimer = setTimeout(() => {
     if(!holding) return;
     document.getElementById("previewHint").style.display = "block";
@@ -461,33 +709,19 @@ function startHold(){
     unlock();
   }, 3000);
 }
-
 function endHold(){
   holding = false;
   if(holdTimer){
     clearTimeout(holdTimer);
     holdTimer = null;
   }
-  // clear the hint message only if they haven't entered anything
-  if(pin.length === 0 && overlay.style.display !== "none"){
-    // don't overwrite wrong/correct messages
-    if(!msgEl.classList.contains("bad") && !msgEl.classList.contains("good")){
-      showMessage("", "");
-    }
-  }
 }
-
-// Touch + mouse
-countdownEl.addEventListener("pointerdown", (e) => {
-  // avoid selecting text / scrolling hold
-  e.preventDefault();
-  startHold();
-});
+countdownEl.addEventListener("pointerdown", (e) => { e.preventDefault(); startHold(); });
 countdownEl.addEventListener("pointerup", endHold);
 countdownEl.addEventListener("pointercancel", endHold);
 countdownEl.addEventListener("pointerleave", endHold);
 
-// Fallback for older Safari that can be picky (still fine to keep)
+// Fallback
 countdownEl.addEventListener("touchstart", (e)=>{ e.preventDefault(); startHold(); }, {passive:false});
 countdownEl.addEventListener("touchend", endHold);
 countdownEl.addEventListener("touchcancel", endHold);
@@ -497,6 +731,267 @@ if(URL_PREVIEW_MODE){
   document.getElementById("previewHint").style.display = "block";
   unlock();
 }
+
+/* =========================================================
+   =====================  ATLA QUIZ  =========================
+   ========================================================= */
+
+const quiz = {
+  questions: [
+    { q:"When something goes wrong, your first instinct is to…", a:[
+      { t:"Talk it out and understand everyone’s feelings", s:{water:2} },
+      { t:"Go straight into fix mode and push through", s:{fire:2} },
+      { t:"Stay calm and deal with it step by step", s:{earth:2} },
+      { t:"Laugh it off and move on", s:{air:2} },
+    ]},
+    { q:"What do people usually rely on you for?", a:[
+      { t:"Emotional support and being there", s:{water:2} },
+      { t:"Motivation / leadership energy", s:{fire:2} },
+      { t:"Stability and reliability", s:{earth:2} },
+      { t:"Good vibes and perspective", s:{air:2} },
+    ]},
+    { q:"You get one free day. You choose…", a:[
+      { t:"Chilling with someone you care about", s:{water:2} },
+      { t:"Doing something productive / ambitious", s:{fire:2} },
+      { t:"A comfy routine day (food + peace)", s:{earth:2} },
+      { t:"Random adventure / something new", s:{air:2} },
+    ]},
+    { q:"How do you handle pressure?", a:[
+      { t:"I feel it deeply, but I keep going", s:{water:2} },
+      { t:"It fuels me — I lock in", s:{fire:2} },
+      { t:"I stay steady and push through", s:{earth:2} },
+      { t:"I try not to let it stick to me", s:{air:2} },
+    ]},
+    { q:"Your ideal environment is…", a:[
+      { t:"Calm, reflective, near water", s:{water:2} },
+      { t:"Energetic, intense, always moving", s:{fire:2} },
+      { t:"Familiar, solid, comfortable", s:{earth:2} },
+      { t:"Open, free, changing, adventurous", s:{air:2} },
+    ]},
+    { q:"How do you deal with conflict?", a:[
+      { t:"Try to understand everyone’s side", s:{water:2} },
+      { t:"Face it head-on", s:{fire:2} },
+      { t:"Avoid drama; handle it quietly", s:{earth:2} },
+      { t:"Detach and let it pass", s:{air:2} },
+    ]},
+    { q:"What drives you most?", a:[
+      { t:"Connection", s:{water:2} },
+      { t:"Purpose and ambition", s:{fire:2} },
+      { t:"Security and loyalty", s:{earth:2} },
+      { t:"Freedom", s:{air:2} },
+    ]},
+    { q:"Pick a weakness you relate to most:", a:[
+      { t:"Feeling things too deeply", s:{water:2, air:1} },
+      { t:"Acting before thinking", s:{fire:2} },
+      { t:"Being stubborn", s:{earth:2} },
+      { t:"Avoiding responsibility sometimes", s:{air:2} },
+    ]},
+    { q:"People would describe you as…", a:[
+      { t:"Caring and intuitive", s:{water:2} },
+      { t:"Bold and passionate", s:{fire:2} },
+      { t:"Reliable and grounded", s:{earth:2} },
+      { t:"Funny and lighthearted", s:{air:2} },
+    ]},
+    { q:"If you had bending, you’d use it to…", a:[
+      { t:"Heal or protect people", s:{water:2, earth:1} },
+      { t:"Get stronger and prove yourself", s:{fire:2} },
+      { t:"Defend what matters most", s:{earth:2} },
+      { t:"Travel and explore freely", s:{air:2} },
+    ]},
+    { q:"Which philosophy feels most like you?", a:[
+      { t:"Flow with life — adapt, don’t force", s:{water:2} },
+      { t:"If I want it, I earn it", s:{fire:2} },
+      { t:"Stand your ground — consistency wins", s:{earth:2} },
+      { t:"Let go — don’t carry what you don’t need", s:{air:2} },
+    ]},
+    { q:"Which character energy fits you best?", a:[
+      { t:"Katara", s:{water:2} },
+      { t:"Zuko", s:{fire:2} },
+      { t:"Toph", s:{earth:2} },
+      { t:"Aang", s:{air:2} },
+    ]},
+  ],
+  results: {
+    water: { emoji:"🌊", name:"Water Tribe", img:"nation_water.png", logo:"nation_water.png",
+      text:"You’re adaptable, emotionally intelligent, and you care deeply. People feel safe around you — even if you don’t always realise it. You handle situations with empathy and you bounce back by flowing around problems instead of forcing them.",
+      hint:"Water isn’t weak — it’s resilient. It survives, it heals, and it always finds a way."
+    },
+    fire: { emoji:"🔥", name:"Fire Nation", img:"nation_fire.png", logo:"nation_fire.png",
+      text:"You’re driven, passionate, and intense in a good way. When you want something, you go for it. Your energy can light up a whole room — and like the best firebenders, your real strength is learning control and growth.",
+      hint:"Fire is power + purpose. When it’s balanced, it becomes unstoppable."
+    },
+    earth:{ emoji:"🌿", name:"Earth Kingdom", img:"nation_earth.png", logo:"nation_earth.png",
+      text:"You’re grounded, loyal, and solid. You show up. You don’t fold easily under pressure, and you protect the people you care about. You’re the person others trust when things get serious.",
+      hint:"Earth stands its ground. Stable, reliable, and quietly strong."
+    },
+    air:  { emoji:"💨", name:"Air Nomads", img:"nation_air.png", logo:"nation_air.png",
+      text:"You value freedom, humour, and perspective. You bring lightness to heavy moments and you don’t let stress trap you for long. You’re creative, open-minded, and you’d rather move forward than stay stuck.",
+      hint:"Air teaches you to let go. Not careless — just free."
+    }
+  }
+};
+
+const startCard = document.getElementById("startCard");
+const startBtn = document.getElementById("startBtn");
+const quizHeader = document.getElementById("quizHeader");
+
+const qIndexEl = document.getElementById("qIndex");
+const qTotalEl = document.getElementById("qTotal");
+const liveVibeEl = document.getElementById("liveVibe");
+
+const qCard = document.getElementById("questionCard");
+const qTextEl = document.getElementById("qText");
+const answersEl = document.getElementById("answers");
+
+const backBtn = document.getElementById("backBtn");
+const resetBtn = document.getElementById("resetBtn");
+
+const resultCard = document.getElementById("resultCard");
+const resEmojiEl = document.getElementById("resEmoji");
+const resNameEl = document.getElementById("resName");
+const resTextEl = document.getElementById("resText");
+const resHintEl = document.getElementById("resHint");
+const retakeBtn = document.getElementById("retakeBtn");
+
+const resultImage = document.getElementById("resultImage");
+const resultLogo = document.getElementById("resultLogo");
+
+qTotalEl.textContent = String(quiz.questions.length);
+
+let step = 0;
+let scores = { water:0, fire:0, earth:0, air:0 };
+let history = [];
+
+function vibeFromScores(){
+  const entries = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  const top = entries[0];
+  if(!top || top[1]===0) return "—";
+  const map = { water:"Water", fire:"Fire", earth:"Earth", air:"Air" };
+  return map[top[0]] ?? "—";
+}
+function applyScore(delta){
+  for(const [k,v] of Object.entries(delta)){
+    if(scores[k]==null) scores[k]=0;
+    scores[k]+=v;
+  }
+}
+
+function showStart(){
+  startCard.classList.remove("hidden");
+  quizHeader.classList.add("hidden");
+  qCard.classList.add("hidden");
+  resultCard.classList.remove("show");
+  liveVibeEl.textContent = "—";
+}
+
+function startQuiz(){
+  startCard.classList.add("hidden");
+  quizHeader.classList.remove("hidden");
+  qCard.classList.remove("hidden");
+  renderQuestion();
+}
+
+function renderQuestion(){
+  resultCard.classList.remove("show");
+  qIndexEl.textContent = String(step+1);
+  liveVibeEl.textContent = vibeFromScores();
+
+  const item = quiz.questions[step];
+  qTextEl.textContent = item.q;
+
+  answersEl.innerHTML = "";
+  item.a.forEach((ans, idx) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "ansBtn";
+    btn.innerHTML = `${ans.t}<small>Tap to choose</small>`;
+    btn.addEventListener("click", () => chooseAnswer(idx));
+    answersEl.appendChild(btn);
+  });
+
+  backBtn.disabled = (step===0);
+  backBtn.style.opacity = (step===0) ? ".5" : "1";
+}
+
+function chooseAnswer(idx){
+  const item = quiz.questions[step];
+
+  if(history[step]!=null){
+    const old = item.a[history[step]];
+    const neg = {};
+    for(const [k,v] of Object.entries(old.s)) neg[k] = -v;
+    applyScore(neg);
+  }
+
+  history[step] = idx;
+  applyScore(item.a[idx].s);
+
+  if(step < quiz.questions.length - 1){
+    step += 1;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult(){
+  const order = ["water","fire","earth","air"];
+  let best = "water";
+  for(const k of order){
+    if(scores[k] > scores[best]) best = k;
+  }
+  const r = quiz.results[best];
+
+  resEmojiEl.textContent = r.emoji;
+  resNameEl.textContent = r.name;
+  resTextEl.textContent = r.text;
+  resHintEl.textContent = r.hint;
+
+  resultImage.src = r.img;
+  resultImage.onerror = () => resultImage.removeAttribute("src");
+
+  resultLogo.src = r.logo;
+  resultLogo.style.display = "inline-block";
+  resultLogo.onerror = () => { resultLogo.style.display="none"; resultLogo.removeAttribute("src"); };
+
+  qCard.classList.add("hidden");
+  resultCard.classList.add("show");
+  quizHeader.classList.remove("hidden");
+  liveVibeEl.textContent = r.name;
+
+  resultCard.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+function restartQuiz(){
+  step = 0;
+  scores = { water:0, fire:0, earth:0, air:0 };
+  history = [];
+  showStart();
+  startCard.scrollIntoView({ behavior:"smooth", block:"start" });
+}
+
+backBtn.addEventListener("click", () => {
+  if(step===0) return;
+
+  const current = quiz.questions[step];
+  if(history[step]!=null){
+    const chosen = current.a[history[step]];
+    const neg = {};
+    for(const [k,v] of Object.entries(chosen.s)) neg[k] = -v;
+    applyScore(neg);
+    history[step] = null;
+  }
+
+  step -= 1;
+  renderQuestion();
+});
+
+resetBtn.addEventListener("click", restartQuiz);
+retakeBtn.addEventListener("click", restartQuiz);
+startBtn.addEventListener("click", startQuiz);
+
+// init
+showStart();
 </script>
 
 </body>
