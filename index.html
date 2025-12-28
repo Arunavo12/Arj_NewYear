@@ -190,9 +190,9 @@ video{
 <!-- FULLSCREEN LOCK -->
 <section class="overlay" id="overlay">
   <div class="panel" id="panel">
-    <div class="kicker">Countdown to New Year</div>
+    <div class="kicker">Countdown to New Year (Arj) </div>
     <div class="countdownBig" id="countdown">00:00:00</div>
-    <div class="countdownSmall" id="countdownText">Unlocks at midnight</div>
+    <div class="countdownSmall" id="countdownText">Unlocks at midnight on New Years</div>
 
     <div class="pinRow">
       <div class="pinBox" id="b1"></div>
@@ -276,12 +276,12 @@ clear.onclick=()=>{reset(false);msg.textContent="";};
 
 function check(){
   if(pin!==CORRECT_PIN){
-    msg.textContent="Wrong code"; msg.className="msg bad";
+    msg.textContent="Wrong code- Hint: you can find it on Snapchat"; msg.className="msg bad";
     correct=false; reset(true); return;
   }
   correct=true;
   if(Date.now()<UNLOCK_AT){
-    msg.textContent="Correct code — will open after midnight";
+    msg.textContent="Correct code — will open after midnight on New Years";
     msg.className="msg good";
     reset(false); return;
   }
