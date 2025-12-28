@@ -1,463 +1,308 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1, viewport-fit=cover" />
-  <title>Happy New Year ✨</title>
-  <style>
-    :root{
-      --bg:#070711;
-      --card: rgba(12, 10, 22, .58);
-      --card2: rgba(12, 10, 22, .40);
-      --text:#f3f4ff;
-      --muted:#b9b9d6;
-      --accent:#ff8fc8;
-      --good:#41f5c0;
-      --bad:#ff4d6d;
-      --border: rgba(255,255,255,.12);
-      --shadow: 0 18px 70px rgba(0,0,0,.55);
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Happy New Year ✨</title>
 
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1200px 600px at 20% 0%, rgba(124,92,255,.25), transparent 60%),
-        radial-gradient(1000px 500px at 90% 20%, rgba(0,255,198,.12), transparent 60%),
-        radial-gradient(900px 600px at 40% 120%, rgba(255,143,200,.18), transparent 55%),
-        var(--bg);
-      min-height:100vh;
-      padding:
-        calc(14px + env(safe-area-inset-top))
-        calc(14px + env(safe-area-inset-right))
-        calc(14px + env(safe-area-inset-bottom))
-        calc(14px + env(safe-area-inset-left));
-      display:grid;
-      place-items:center;
-    }
+<style>
+:root{
+  --bg:#070711;
+  --text:#f3f4ff;
+  --muted:#b9b9d6;
+  --accent:#ff8fc8;
+  --good:#41f5c0;
+  --bad:#ff4d6d;
+  --shadow:0 20px 80px rgba(0,0,0,.6);
+}
 
-    .frame{
-      width:min(980px, 100%);
-      border-radius:26px;
-      overflow:hidden;
-      box-shadow: var(--shadow);
-      border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      position:relative;
-    }
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(1200px 600px at 20% 0%, rgba(124,92,255,.25), transparent 60%),
+    radial-gradient(1000px 500px at 90% 20%, rgba(0,255,198,.12), transparent 60%),
+    radial-gradient(900px 600px at 40% 120%, rgba(255,143,200,.18), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
 
-    /* ===== MAIN CONTENT (BLUR-LOCKED) ===== */
-    .contentWrap{
-      position:relative;
-      padding: 26px 18px 44px;
-    }
-    .wrap{ max-width: 920px; margin: 0 auto; }
+/* ===== FULLSCREEN OVERLAY ===== */
+.overlay{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  padding:
+    calc(20px + env(safe-area-inset-top))
+    calc(20px + env(safe-area-inset-right))
+    calc(20px + env(safe-area-inset-bottom))
+    calc(20px + env(safe-area-inset-left));
+  background:
+    radial-gradient(1200px 600px at 20% 0%, rgba(124,92,255,.35), transparent 60%),
+    radial-gradient(1000px 500px at 90% 20%, rgba(0,255,198,.18), transparent 60%),
+    radial-gradient(900px 600px at 40% 120%, rgba(255,143,200,.25), transparent 55%),
+    rgba(7,7,17,.9);
+  backdrop-filter:blur(6px);
+}
 
-    h1{
-      font-size: clamp(34px, 6vw, 58px);
-      letter-spacing:-.02em;
-      margin: 6px 0 10px;
-      line-height:1.05;
-    }
-    .sub{
-      color:var(--muted);
-      font-size: 15px;
-      line-height:1.55;
-      max-width: 70ch;
-      margin-bottom: 18px;
-    }
-    .grid{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:18px;
-      align-items:start;
-    }
-    @media (max-width: 860px){
-      .grid{ grid-template-columns: 1fr; }
-    }
-    .card{
-      background: rgba(10,10,20,.55);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius: 18px;
-      padding:16px;
-      box-shadow: 0 12px 40px rgba(0,0,0,.35);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    video{
-      width:100%;
-      border-radius:14px;
-      background:black;
-      display:block;
-      border:1px solid rgba(255,255,255,.08);
-    }
-    .para{
-      font-size: 15px;
-      color: var(--text);
-      line-height:1.75;
-    }
-    .footer{
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 12px;
-      text-align:center;
-      opacity:.9;
-    }
+.panel{
+  width:min(520px,95vw);
+  text-align:center;
+  background:rgba(0,0,0,.28);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:26px;
+  padding:22px 18px 20px;
+  box-shadow:var(--shadow);
+}
 
-    /* Blur/lock effect */
-    .locked .contentWrap{
-      filter: blur(10px) saturate(1.05);
-      transform: scale(1.01);
-      pointer-events:none;
-      user-select:none;
-      opacity:.75;
-    }
+.kicker{
+  font-size:13px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.75);
+  margin-bottom:10px;
+}
 
-    /* ===== OVERLAY LOCK UI ===== */
-    .overlay{
-      position:absolute;
-      inset:0;
-      display:grid;
-      place-items:center;
-      padding: 18px;
-    }
-    .overlayInner{
-      width:min(520px, 96vw);
-      text-align:center;
-      position:relative;
-    }
+.countdownBig{
+  font-size:clamp(38px,10vw,58px);
+  font-weight:800;
+  letter-spacing:-.02em;
+}
 
-    .panel{
-      background: rgba(0,0,0,.25);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius: 22px;
-      padding: 18px 16px 16px;
-      box-shadow: 0 18px 60px rgba(0,0,0,.45);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
+.countdownSmall{
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:16px;
+}
 
-    .kicker{
-      color: rgba(255,255,255,.78);
-      font-size: 13px;
-      letter-spacing:.12em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
+.pinRow{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:14px;
+}
+.pinBox{
+  width:44px;
+  height:52px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.08);
+}
+.pinBox.filled::after{
+  content:"•";
+  display:grid;
+  place-items:center;
+  font-size:28px;
+  height:100%;
+}
 
-    .countdownBig{
-      font-size: clamp(34px, 9vw, 56px);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin: 2px 0 6px;
-      text-shadow: 0 18px 40px rgba(0,0,0,.45);
-    }
-    .countdownSmall{
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 14px;
-    }
+.keypad{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.key{
+  height:54px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.06));
+  color:white;
+  font-size:18px;
+  font-weight:700;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.key.alt{
+  font-size:13px;
+  font-weight:700;
+  color:rgba(255,255,255,.75);
+}
 
-    .pinRow{
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      margin: 10px 0 14px;
-    }
-    .pinBox{
-      width: 44px;
-      height: 52px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.07);
-      display:grid;
-      place-items:center;
-      font-size: 18px;
-      font-weight: 750;
-      color: rgba(255,255,255,.9);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
-    }
-    .pinBox.filled::after{
-      content:"•";
-      font-size: 26px;
-      line-height: 1;
-    }
+.msg{
+  margin-top:12px;
+  min-height:18px;
+  font-size:13px;
+}
+.msg.bad{color:var(--bad);}
+.msg.good{color:var(--good);}
 
-    .keypad{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 8px;
-    }
-    .key{
-      height: 54px;
-      border-radius: 16px;
-      border:1px solid rgba(255,255,255,.12);
-      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-      color: rgba(255,255,255,.92);
-      font-size: 18px;
-      font-weight: 750;
-      cursor:pointer;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      transition: transform .08s ease, filter .12s ease, border-color .12s ease;
-    }
-    .key:active{ transform: scale(.99); filter: brightness(1.06); }
-    .key.alt{
-      font-size: 13px;
-      font-weight: 750;
-      color: rgba(255,255,255,.78);
-    }
+.shake{animation:shake .35s;}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-8px)}
+  50%{transform:translateX(8px)}
+  75%{transform:translateX(-6px)}
+}
 
-    .msg{
-      min-height: 18px;
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .msg.bad{ color: var(--bad); }
-    .msg.good{ color: var(--good); }
+/* ===== MAIN CONTENT ===== */
+.frame{
+  max-width:980px;
+  margin:0 auto;
+  padding:28px 18px 44px;
+}
+.locked .frame{
+  filter:blur(10px);
+  opacity:.6;
+  pointer-events:none;
+}
 
-    .shake{ animation: shake .35s ease; }
-    @keyframes shake{
-      0%,100%{ transform: translateX(0); }
-      20%{ transform: translateX(-10px); }
-      40%{ transform: translateX(9px); }
-      60%{ transform: translateX(-7px); }
-      80%{ transform: translateX(6px); }
-    }
-
-    /* When unlocked, hide overlay smoothly */
-    .unlocked .overlay{
-      opacity:0;
-      pointer-events:none;
-      transition: opacity .35s ease;
-    }
-    .unlocked .contentWrap{
-      filter:none;
-      transform:none;
-      opacity:1;
-      pointer-events:auto;
-      transition: filter .35s ease, transform .35s ease, opacity .35s ease;
-    }
-
-    /* Mobile fit */
-    @media (max-width: 420px){
-      .pinBox{ width: 40px; height: 48px; }
-      .key{ height: 52px; }
-    }
-  </style>
+h1{
+  font-size:clamp(34px,6vw,58px);
+  margin-bottom:10px;
+}
+.sub{
+  color:var(--muted);
+  max-width:70ch;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:18px;
+}
+@media(max-width:850px){
+  .grid{grid-template-columns:1fr}
+}
+.card{
+  background:rgba(10,10,20,.55);
+  border-radius:18px;
+  padding:16px;
+}
+video{
+  width:100%;
+  border-radius:14px;
+  background:black;
+}
+.footer{
+  margin-top:18px;
+  font-size:12px;
+  color:var(--muted);
+  text-align:center;
+}
+</style>
 </head>
 
-<body>
-  <main class="frame locked" id="app">
-    <!-- MAIN CONTENT (BLURRED UNTIL UNLOCK) -->
-    <section class="contentWrap">
-      <div class="wrap">
-        <h1>Happy New Year 🎆</h1>
-        <p class="sub">
-          Replace this with your short intro message.
-        </p>
+<body class="locked">
 
-        <div class="grid">
-          <div class="card">
-            <video controls playsinline preload="metadata">
-              <source src="montage.mp4" type="video/mp4" />
-              Your browser doesn’t support video playback.
-            </video>
-          </div>
+<!-- FULLSCREEN LOCK -->
+<section class="overlay" id="overlay">
+  <div class="panel" id="panel">
+    <div class="kicker">Countdown to New Year</div>
+    <div class="countdownBig" id="countdown">00:00:00</div>
+    <div class="countdownSmall" id="countdownText">Unlocks at midnight</div>
 
-          <div class="card">
-            <div class="para">
-              Replace this with your longer paragraph. Make it personal ✨
-              <br><br>
-              — From me 💗
-            </div>
-          </div>
-        </div>
+    <div class="pinRow">
+      <div class="pinBox" id="b1"></div>
+      <div class="pinBox" id="b2"></div>
+      <div class="pinBox" id="b3"></div>
+      <div class="pinBox" id="b4"></div>
+      <div class="pinBox" id="b5"></div>
+      <div class="pinBox" id="b6"></div>
+    </div>
 
-        <div class="footer">Made with love ✨</div>
-      </div>
-    </section>
+    <div class="keypad">
+      <button class="key" data-n="1">1</button>
+      <button class="key" data-n="2">2</button>
+      <button class="key" data-n="3">3</button>
+      <button class="key" data-n="4">4</button>
+      <button class="key" data-n="5">5</button>
+      <button class="key" data-n="6">6</button>
+      <button class="key" data-n="7">7</button>
+      <button class="key" data-n="8">8</button>
+      <button class="key" data-n="9">9</button>
+      <button class="key alt" id="clear">Clear</button>
+      <button class="key" data-n="0">0</button>
+      <button class="key alt" id="del">Delete</button>
+    </div>
 
-    <!-- OVERLAY LOCK / COUNTDOWN -->
-    <section class="overlay" aria-label="Lock overlay">
-      <div class="overlayInner" id="overlayInner">
-        <div class="panel">
-          <div class="kicker">Countdown to New Year</div>
-          <div class="countdownBig" id="countdownBig">00:00:00</div>
-          <div class="countdownSmall" id="countdownSmall">Unlocks at midnight (local time)</div>
+    <div class="msg" id="msg"></div>
+  </div>
+</section>
 
-          <div class="pinRow" aria-label="PIN">
-            <div class="pinBox" id="b1"></div>
-            <div class="pinBox" id="b2"></div>
-            <div class="pinBox" id="b3"></div>
-            <div class="pinBox" id="b4"></div>
-            <div class="pinBox" id="b5"></div>
-            <div class="pinBox" id="b6"></div>
-          </div>
+<!-- CONTENT -->
+<main class="frame">
+  <h1>Happy New Year 🎆</h1>
+  <p class="sub">Replace this with your message.</p>
 
-          <div class="keypad" aria-label="Keypad">
-            <button class="key" data-n="1">1</button>
-            <button class="key" data-n="2">2</button>
-            <button class="key" data-n="3">3</button>
-            <button class="key" data-n="4">4</button>
-            <button class="key" data-n="5">5</button>
-            <button class="key" data-n="6">6</button>
-            <button class="key" data-n="7">7</button>
-            <button class="key" data-n="8">8</button>
-            <button class="key" data-n="9">9</button>
+  <div class="grid">
+    <div class="card">
+      <video controls playsinline>
+        <source src="montage.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="card">
+      Replace this with your longer paragraph 💗
+    </div>
+  </div>
 
-            <button class="key alt" id="clearBtn">Clear</button>
-            <button class="key" data-n="0">0</button>
-            <button class="key alt" id="delBtn">Delete</button>
-          </div>
+  <div class="footer">Made with love ✨</div>
+</main>
 
-          <div class="msg" id="msg"></div>
-        </div>
-      </div>
-    </section>
-  </main>
+<script>
+const CORRECT_PIN = "123456";
+const UNLOCK_YEAR = 2026;
+const UNLOCK_AT = new Date(UNLOCK_YEAR,0,1,0,0,0,0);
 
-  <script>
-    /************* CONFIG *************/
-    const CORRECT_PIN = "123456"; // <-- change this
-    const UNLOCK_YEAR = 2026;     // <-- unlock moment: Jan 1, 2026 at 00:00 local time
-    const UNLOCK_AT = new Date(UNLOCK_YEAR, 0, 1, 0, 0, 0, 0);
+let pin="", correct=false;
 
-    /************* STATE *************/
-    let pin = "";
-    let correctEntered = false;
+const boxes=[...Array(6)].map((_,i)=>document.getElementById("b"+(i+1)));
+const msg=document.getElementById("msg");
+const panel=document.getElementById("panel");
 
-    const app = document.getElementById("app");
-    const msg = document.getElementById("msg");
-    const overlayInner = document.getElementById("overlayInner");
-    const big = document.getElementById("countdownBig");
-    const small = document.getElementById("countdownSmall");
-    const boxes = [...Array(6)].map((_,i)=>document.getElementById("b"+(i+1)));
+function update(){
+  boxes.forEach((b,i)=>b.classList.toggle("filled",i<pin.length));
+}
+function reset(shake){
+  pin=""; update();
+  if(shake){panel.classList.add("shake");setTimeout(()=>panel.classList.remove("shake"),350);}
+}
+function unlock(){
+  document.body.classList.remove("locked");
+  document.getElementById("overlay").style.display="none";
+}
 
-    const pad = n => String(n).padStart(2, "0");
+document.querySelectorAll(".key[data-n]").forEach(b=>{
+  b.onclick=()=>{
+    if(pin.length>=6)return;
+    pin+=b.dataset.n; update();
+    if(pin.length===6) check();
+  }
+});
+del.onclick=()=>{pin=pin.slice(0,-1);update();};
+clear.onclick=()=>{reset(false);msg.textContent="";};
 
-    function updateBoxes(){
-      boxes.forEach((b,i)=> b.classList.toggle("filled", i < pin.length));
-    }
+function check(){
+  if(pin!==CORRECT_PIN){
+    msg.textContent="Wrong code"; msg.className="msg bad";
+    correct=false; reset(true); return;
+  }
+  correct=true;
+  if(Date.now()<UNLOCK_AT){
+    msg.textContent="Correct code — will open after midnight";
+    msg.className="msg good";
+    reset(false); return;
+  }
+  unlock();
+}
 
-    function showMessage(text, kind){
-      msg.textContent = text;
-      msg.className = "msg" + (kind ? " " + kind : "");
-    }
-
-    function resetPin(withShake=false){
-      pin = "";
-      updateBoxes();
-      if (withShake){
-        overlayInner.classList.remove("shake");
-        void overlayInner.offsetWidth;
-        overlayInner.classList.add("shake");
-      }
-    }
-
-    function nowIsAfterMidnight(){
-      return Date.now() >= UNLOCK_AT.getTime();
-    }
-
-    function unlock(){
-      app.classList.remove("locked");
-      app.classList.add("unlocked");
-    }
-
-    function tickCountdown(){
-      const now = new Date();
-      const diffMs = UNLOCK_AT.getTime() - now.getTime();
-
-      if (diffMs <= 0){
-        big.textContent = "00:00:00";
-        small.textContent = "It’s midnight 🎉";
-
-        // If correct PIN was entered earlier, auto-unlock at midnight:
-        if (correctEntered && !app.classList.contains("unlocked")) {
-          unlock();
-        }
-        return;
-      }
-
-      const total = Math.ceil(diffMs / 1000);
-      const h = Math.floor(total / 3600);
-      const m = Math.floor((total % 3600) / 60);
-      const s = total % 60;
-
-      big.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
-      small.textContent = "Unlocks at midnight (local time)";
-    }
-
-    function checkPin(){
-      const pinOk = (pin === CORRECT_PIN);
-      const timeOk = nowIsAfterMidnight();
-
-      if (!pinOk){
-        showMessage("Wrong code", "bad");
-        correctEntered = false;
-        resetPin(true);
-        return;
-      }
-
-      correctEntered = true;
-
-      if (!timeOk){
-        showMessage("Correct code — will open after midnight", "good");
-        resetPin(false);
-        return;
-      }
-
-      showMessage("Unlocked 🎉", "good");
-      unlock();
-    }
-
-    /************* INPUT *************/
-    document.querySelectorAll(".key[data-n]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        if (pin.length >= 6) return;
-        pin += btn.dataset.n;
-        updateBoxes();
-        if (pin.length === 6) setTimeout(checkPin, 120);
-      });
-    });
-
-    document.getElementById("delBtn").addEventListener("click", ()=>{
-      pin = pin.slice(0,-1);
-      updateBoxes();
-      showMessage("", "");
-    });
-
-    document.getElementById("clearBtn").addEventListener("click", ()=>{
-      resetPin(false);
-      showMessage("", "");
-    });
-
-    // Desktop keyboard support
-    window.addEventListener("keydown", (e)=>{
-      if (app.classList.contains("unlocked")) return;
-
-      if (/^\d$/.test(e.key)){
-        if (pin.length < 6){
-          pin += e.key;
-          updateBoxes();
-          if (pin.length === 6) setTimeout(checkPin, 120);
-        }
-      } else if (e.key === "Backspace"){
-        pin = pin.slice(0,-1);
-        updateBoxes();
-      } else if (e.key === "Escape"){
-        resetPin(false);
-      }
-    });
-
-    tickCountdown();
-    setInterval(tickCountdown, 250);
-  </script>
+function tick(){
+  const d=UNLOCK_AT-Date.now();
+  if(d<=0){
+    countdown.textContent="00:00:00";
+    countdownText.textContent="It’s midnight 🎉";
+    if(correct) unlock();
+  }else{
+    const t=Math.ceil(d/1000);
+    countdown.textContent=
+      String(Math.floor(t/3600)).padStart(2,"0")+":"+
+      String(Math.floor(t%3600/60)).padStart(2,"0")+":"+
+      String(t%60).padStart(2,"0");
+  }
+}
+tick(); setInterval(tick,250);
+</script>
 </body>
 </html>
