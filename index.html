@@ -7,17 +7,13 @@
   <style>
     :root{
       --bg:#070711;
-      --card:rgba(18,18,34,.65);
       --text:#f3f4ff;
       --muted:#b9b9d6;
       --accent:#ff8fc8;
       --good:#41f5c0;
       --bad:#ff4d6d;
-      --glass: rgba(255,255,255,.06);
-      --glass2: rgba(255,255,255,.10);
       --shadow: 0 18px 60px rgba(0,0,0,.45);
     }
-
     *{ box-sizing:border-box; }
     body{
       margin:0;
@@ -41,7 +37,6 @@
       box-shadow: var(--shadow);
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       border:1px solid rgba(255,255,255,.10);
-      position:relative;
     }
 
     /* Lock screen */
@@ -52,7 +47,6 @@
       place-items:center;
       position:relative;
     }
-
     .lock::before{
       content:"";
       position:absolute; inset:0;
@@ -63,14 +57,12 @@
       pointer-events:none;
       opacity:.95;
     }
-
     .lockInner{
       width:min(420px, 92vw);
       position:relative;
       z-index:1;
       text-align:center;
     }
-
     .time{
       font-size:54px;
       font-weight:700;
@@ -81,32 +73,25 @@
     .date{
       color:var(--muted);
       font-size:15px;
-      margin-bottom:14px;
+      margin-bottom:10px;
     }
 
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
+    .countdown{
+      display:inline-block;
+      padding:10px 14px;
       border-radius:999px;
       background: rgba(0,0,0,.28);
       border:1px solid rgba(255,255,255,.10);
       color:var(--muted);
       font-size:13px;
-      margin-bottom:18px;
-    }
-    .dot{
-      width:8px; height:8px; border-radius:50%;
-      background: var(--accent);
-      box-shadow: 0 0 18px rgba(255,143,200,.75);
+      margin: 6px 0 16px;
     }
 
     .pinDots{
       display:flex;
       justify-content:center;
       gap:10px;
-      margin: 10px 0 18px;
+      margin: 8px 0 18px;
     }
     .pinDot{
       width:12px; height:12px; border-radius:50%;
@@ -124,9 +109,8 @@
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap:12px;
-      margin-top: 10px;
+      margin-top: 8px;
     }
-
     .key{
       aspect-ratio: 1 / 1;
       border-radius:999px;
@@ -149,377 +133,29 @@
       background: rgba(255,255,255,.14);
       border-color: rgba(255,255,255,.18);
     }
-
-    .key.small{
-      font-size:16px;
-      font-weight:600;
-      color:var(--muted);
-    }
-
     .rowBottom{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap:12px;
       margin-top:12px;
     }
-
-    .hint{
-      margin-top:16px;
-      font-size:13px;
+    .key.small{
+      font-size:16px;
+      font-weight:600;
       color:var(--muted);
-      line-height:1.35;
     }
 
     .msg{
       margin-top:12px;
-      min-height:18px;
+      min-height:20px;
       font-size:13px;
       color:var(--muted);
     }
     .msg.bad{ color: var(--bad); }
     .msg.good{ color: var(--good); }
 
-    .shake{
-      animation: shake .35s ease;
-    }
+    .shake{ animation: shake .35s ease; }
     @keyframes shake{
       0%,100%{ transform: translateX(0); }
       20%{ transform: translateX(-10px); }
-      40%{ transform: translateX(9px); }
-      60%{ transform: translateX(-7px); }
-      80%{ transform: translateX(6px); }
-    }
-
-    /* Unlocked content */
-    .content{
-      display:none;
-      padding:28px 18px 44px;
-    }
-
-    .wrap{
-      max-width: 920px;
-      margin: 0 auto;
-    }
-
-    h1{
-      font-size: clamp(34px, 6vw, 58px);
-      letter-spacing:-.02em;
-      margin: 6px 0 10px;
-      line-height:1.05;
-    }
-    .sub{
-      color:var(--muted);
-      font-size: 15px;
-      line-height:1.55;
-      max-width: 70ch;
-      margin-bottom: 18px;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:18px;
-      align-items:start;
-    }
-    @media (max-width: 860px){
-      .grid{ grid-template-columns: 1fr; }
-    }
-
-    .card{
-      background: rgba(10,10,20,.55);
-      border:1px solid rgba(255,255,255,.10);
-      border-radius: 18px;
-      padding:16px;
-      box-shadow: 0 12px 40px rgba(0,0,0,.35);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-
-    video{
-      width:100%;
-      border-radius:14px;
-      background:black;
-      display:block;
-      border:1px solid rgba(255,255,255,.08);
-    }
-
-    .para{
-      font-size: 15px;
-      color: var(--text);
-      line-height:1.75;
-    }
-
-    .footer{
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 12px;
-      text-align:center;
-      opacity:.9;
-    }
-
-    .tiny{
-      font-size:12px;
-      color:var(--muted);
-      margin-top:10px;
-      opacity:.9;
-    }
-
-    .btn{
-      margin-top:14px;
-      width:100%;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.10);
-      color:var(--text);
-      border-radius:14px;
-      padding:12px 14px;
-      cursor:pointer;
-      font-weight:650;
-      transition: transform .08s ease, background .12s ease, border-color .12s ease;
-    }
-    .btn:active{ transform: scale(.99); }
-  </style>
-</head>
-<body>
-  <main class="frame">
-    <!-- LOCK SCREEN -->
-    <section class="lock" id="lockScreen" aria-label="Locked">
-      <div class="lockInner" id="lockInner">
-        <div class="time" id="clock">00:00</div>
-        <div class="date" id="dateLine">—</div>
-
-        <div class="pill" id="statePill">
-          <span class="dot" id="stateDot"></span>
-          <span id="stateText">Locked until midnight</span>
-        </div>
-
-        <div class="pinDots" aria-label="PIN">
-          <div class="pinDot" id="d1"></div>
-          <div class="pinDot" id="d2"></div>
-          <div class="pinDot" id="d3"></div>
-          <div class="pinDot" id="d4"></div>
-          <div class="pinDot" id="d5"></div>
-          <div class="pinDot" id="d6"></div>
-        </div>
-
-        <div class="keypad" aria-label="Keypad">
-          <button class="key" data-n="1">1</button>
-          <button class="key" data-n="2">2</button>
-          <button class="key" data-n="3">3</button>
-          <button class="key" data-n="4">4</button>
-          <button class="key" data-n="5">5</button>
-          <button class="key" data-n="6">6</button>
-          <button class="key" data-n="7">7</button>
-          <button class="key" data-n="8">8</button>
-          <button class="key" data-n="9">9</button>
-        </div>
-
-        <div class="rowBottom">
-          <button class="key small" id="clearBtn">Clear</button>
-          <button class="key" data-n="0">0</button>
-          <button class="key small" id="delBtn">Delete</button>
-        </div>
-
-        <div class="msg" id="msg"></div>
-
-        <div class="hint">
-          Enter the 6-digit PIN to unlock.<br/>
-          <span class="tiny" id="countdown">Checking midnight…</span>
-        </div>
-
-        <button class="btn" id="testUnlockBtn" style="display:none;">(Dev) Force unlock</button>
-      </div>
-    </section>
-
-    <!-- UNLOCKED CONTENT -->
-    <section class="content" id="content" aria-label="Unlocked content">
-      <div class="wrap">
-        <h1>Happy New Year 🎆</h1>
-        <p class="sub">
-          <!-- Replace this paragraph -->
-          Here’s to us — all the laughs, the chaos, the random moments, and everything we survived this year.
-          I’m grateful for you. Let’s make next year even better.
-        </p>
-
-        <div class="grid">
-          <div class="card">
-            <video id="montage" controls playsinline preload="metadata">
-              <!-- Put your montage video file in the same folder, and update the filename here -->
-              <source src="montage.mp4" type="video/mp4" />
-              Your browser doesn’t support video playback.
-            </video>
-            <div class="tiny" style="margin-top:10px;">
-              Tip: if the video doesn’t play, check the filename + keep it in the same folder as this HTML file.
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="para" id="longMessage">
-              <!-- Replace with your longer paragraph/message -->
-              I wanted you to open this right after midnight, because you genuinely deserve to start the year
-              feeling loved and appreciated. Thank you for being you — for the time, the energy, the support,
-              and the memories. I’m excited for everything we’re going to do next year.
-              <br/><br/>
-              From: <strong>Me</strong> 💗
-            </div>
-          </div>
-        </div>
-
-        <div class="footer">Made with love ✨</div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    /************* CONFIG *************/
-    const CORRECT_PIN = "123456";   // <-- change this
-    const UNLOCK_YEAR = 2026;       // <-- set to the year you're entering (e.g. 2026 for Jan 1, 2026)
-    // Unlock moment is: Jan 1, UNLOCK_YEAR at 00:00:00 in the viewer's LOCAL time.
-    const UNLOCK_AT = new Date(UNLOCK_YEAR, 0, 1, 0, 0, 0, 0);
-
-    /************* STATE *************/
-    let pin = "";
-    const lockScreen = document.getElementById("lockScreen");
-    const content = document.getElementById("content");
-    const msg = document.getElementById("msg");
-    const lockInner = document.getElementById("lockInner");
-    const countdown = document.getElementById("countdown");
-    const stateText = document.getElementById("stateText");
-    const stateDot = document.getElementById("stateDot");
-
-    const dots = [...Array(6)].map((_,i)=>document.getElementById("d"+(i+1)));
-
-    function updateDots(){
-      dots.forEach((d,i)=> d.classList.toggle("filled", i < pin.length));
-    }
-
-    function nowIsAfterMidnight(){
-      return new Date().getTime() >= UNLOCK_AT.getTime();
-    }
-
-    function formatTime(d){
-      return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    }
-
-    function tickClock(){
-      const now = new Date();
-      document.getElementById("clock").textContent = formatTime(now);
-      document.getElementById("dateLine").textContent =
-        now.toLocaleDateString([], { weekday:"long", month:"long", day:"numeric" });
-
-      const diff = UNLOCK_AT.getTime() - now.getTime();
-
-      if (diff <= 0){
-        countdown.textContent = "It’s midnight 🎉 Enter the PIN to unlock.";
-        stateText.textContent = "Ready to unlock";
-        stateDot.style.background = "var(--good)";
-        stateDot.style.boxShadow = "0 0 18px rgba(65,245,192,.75)";
-      } else {
-        const total = Math.ceil(diff/1000);
-        const h = Math.floor(total/3600);
-        const m = Math.floor((total%3600)/60);
-        const s = total%60;
-        const pad = n => String(n).padStart(2,"0");
-        countdown.textContent = `Unlocks in ${pad(h)}:${pad(m)}:${pad(s)} (local time)`;
-        stateText.textContent = "Locked until midnight";
-        stateDot.style.background = "var(--accent)";
-        stateDot.style.boxShadow = "0 0 18px rgba(255,143,200,.75)";
-      }
-    }
-
-    function showMessage(text, kind){
-      msg.textContent = text;
-      msg.className = "msg" + (kind ? " " + kind : "");
-    }
-
-    function resetPin(withShake=false){
-      pin = "";
-      updateDots();
-      if (withShake){
-        lockInner.classList.remove("shake");
-        void lockInner.offsetWidth; // reflow
-        lockInner.classList.add("shake");
-      }
-    }
-
-    function unlock(){
-      lockScreen.style.display = "none";
-      content.style.display = "block";
-      // optionally auto-play if user wants (often blocked), so we won't force it
-      showMessage("", "");
-    }
-
-    function tryUnlock(){
-      const timeOk = nowIsAfterMidnight();
-      const pinOk = (pin === CORRECT_PIN);
-
-      if (!timeOk){
-        showMessage("Not yet — come back after midnight ✨", "bad");
-        resetPin(true);
-        return;
-      }
-
-      if (!pinOk){
-        showMessage("Wrong PIN. Try again.", "bad");
-        resetPin(true);
-        return;
-      }
-
-      showMessage("Unlocked 🎉", "good");
-      unlock();
-    }
-
-    /************* INPUT *************/
-    document.querySelectorAll(".key[data-n]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        if (pin.length >= 6) return;
-        pin += btn.dataset.n;
-        updateDots();
-
-        if (pin.length === 6){
-          // small delay feels iPhone-ish
-          setTimeout(tryUnlock, 140);
-        }
-      });
-    });
-
-    document.getElementById("delBtn").addEventListener("click", ()=>{
-      pin = pin.slice(0,-1);
-      updateDots();
-      showMessage("", "");
-    });
-
-    document.getElementById("clearBtn").addEventListener("click", ()=>{
-      resetPin(false);
-      showMessage("", "");
-    });
-
-    // keyboard support (nice on desktop)
-    window.addEventListener("keydown", (e)=>{
-      if (content.style.display === "block") return;
-      if (/^\d$/.test(e.key)){
-        if (pin.length < 6){
-          pin += e.key;
-          updateDots();
-          if (pin.length === 6) setTimeout(tryUnlock, 140);
-        }
-      } else if (e.key === "Backspace"){
-        pin = pin.slice(0,-1);
-        updateDots();
-      } else if (e.key === "Escape"){
-        resetPin(false);
-      }
-    });
-
-    // Start clock
-    tickClock();
-    setInterval(tickClock, 250);
-
-    // Optional dev shortcut: add #dev to the URL to show a force unlock button
-    if (location.hash.toLowerCase() === "#dev"){
-      const b = document.getElementById("testUnlockBtn");
-      b.style.display = "block";
-      b.addEventListener("click", unlock);
-    }
-  </script>
-</body>
-</html>
+      40%{ transform: translateX(9
